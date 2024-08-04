@@ -7,5 +7,6 @@ urlpatterns= [
     path('login/', views.loginpage, name='login'),
     path('delete-task/<str:name>/', views.DeleteTask, name='delete'),
     path('update/<str:name>/', views.Update, name='update'),
+    path('api/checklists/', views.checklist_json, name='checklist_json'),
 
 ]
