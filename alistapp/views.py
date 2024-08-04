@@ -15,8 +15,7 @@ def home(request):
          'checklists' : all_checklists
     }
     return render(request, 'alistapp/todo.html', context)
-    else:
-                return redirect('login')
+   
     
 def register(request):
     if request.method == 'POST':
