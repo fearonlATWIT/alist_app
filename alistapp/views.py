@@ -16,9 +16,9 @@ def home(request):
     if request.user.is_authenticated:
         all_checklists = checklist.objects.filter(user=request.user)
         
-         if request.headers.get('Content-Type') == 'application/json':
-                checklist_data = list(all_checklists.values())
-                return JsonResponse(checklist_data, safe=False)
+        if request.headers.get('Content-Type') == 'application/json':
+            checklist_data = list(all_checklists.values())
+            return JsonResponse(checklist_data, safe=False)
              
         context = {
             'checklists': all_checklists
