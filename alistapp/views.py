@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import checklist
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 # Create your views here.
 @login_required(login_url='login')
 def home(request):
@@ -14,7 +15,11 @@ def home(request):
 
     if request.user.is_authenticated:
         all_checklists = checklist.objects.filter(user=request.user)
-    
+        
+         if request.headers.get('Content-Type') == 'application/json':
+                checklist_data = list(all_checklists.values())
+                return JsonResponse(checklist_data, safe=False)
+             
         context = {
             'checklists': all_checklists
         }
