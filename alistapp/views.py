@@ -4,17 +4,27 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import checklist
 # Create your views here.
+@login_required(login_url='login')
 def home(request):
     if request.method == 'POST':
          task = request.POST.get('task')
          new_checklist = checklist(user=request.user, checklist_name=task)
          new_checklist.save()
+
+    if request.user.is_authenticated:
+        all_checklists = checklist.objects.filter(user=request.user)
     
-    all_checklists = checklist.objects.filter(user=request.user)
-    context = {
-         'checklists' : all_checklists
-    }
-    return render(request, 'alistapp/todo.html', context)
+        context = {
+            'checklists': all_checklists
+        }
+        return render(request, 'alistapp/todo.html', context)
+    else:      
+        return redirect('login')
+    #all_checklists = checklist.objects.filter(user=request.user)
+    #context = {
+    #     'checklists' : all_checklists
+    #}
+    #return render(request, 'alistapp/todo.html', context)
    
     
 def register(request):
