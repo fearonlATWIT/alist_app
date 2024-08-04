@@ -60,6 +60,16 @@
               </table>
   
             </div>
+                <script>
+                    async function fetchChecklists() {
+                            const response = await fetch('/api/checklists/');
+                            const data = await response.json();
+                            console.log(data);
+                        }
+                        fetchChecklists();
+                </script>
+              </body>
+            </html>
           </div>
         </div>
       </div>
