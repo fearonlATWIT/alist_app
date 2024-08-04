@@ -15,7 +15,10 @@ def home(request):
          'checklists' : all_checklists
     }
     return render(request, 'alistapp/todo.html', context)
-
+else:
+        # Redirect to login page if user is not authenticated
+        return redirect('login')
+    
 def register(request):
     if request.method == 'POST':
         username = request.POST.get('username')
