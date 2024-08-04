@@ -15,10 +15,6 @@ def home(request):
 
     if request.user.is_authenticated:
         all_checklists = checklist.objects.filter(user=request.user)
-        
-        if request.headers.get('Content-Type') == 'application/json':
-            checklist_data = list(all_checklists.values())
-            return JsonResponse(checklist_data, safe=False)
              
         context = {
             'checklists': all_checklists
@@ -32,7 +28,13 @@ def home(request):
     #}
     #return render(request, 'alistapp/todo.html', context)
    
-    
+@login_required(login_url='login')
+def checklist_json(request):
+    if request.method == 'GET':
+        user_checklists = checklist.objects.filter(user=request.user).values()
+        data = list(user_checklists)
+        return JsonResponse(data, safe=False)
+        
 def register(request):
     if request.method == 'POST':
         username = request.POST.get('username')
